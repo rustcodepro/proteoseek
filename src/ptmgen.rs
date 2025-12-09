@@ -1,5 +1,4 @@
 use std::collections::HashSet;
-use std::collections::HashSet;
 use std::error::Error;
 use std::fs::File;
 use std::io::Write;
@@ -18,13 +17,13 @@ pub fn ptmgenerate(pathfile: &str) -> Result<String, Box<dyn Error>> {
     for i in pathfileread.lines() {
         let line = i.expect("line not present");
         if line.starts_with("#") {
-            head.push(line)
+            head.push(line.clone())
         }
         if !line.starts_with("#") {
             seq.push(line)
         }
     }
-    let sequencevec: HashSet<String> = HashSet::new();
+    let mut sequencevec: HashSet<String> = HashSet::new();
     for i in seq.iter() {
         let kmervec = i
             .as_bytes()
@@ -32,10 +31,10 @@ pub fn ptmgenerate(pathfile: &str) -> Result<String, Box<dyn Error>> {
             .map(|x| std::str::from_utf8(x).unwrap())
             .collect::<Vec<_>>();
         for kmer in kmervec.iter() {
-            sequencevec.insert(kmer.clone);
+            sequencevec.insert(kmer.to_string());
         }
     }
-    let filewrite = File::create("kmerptms.txt").expect("file not present");
+    let mut filewrite = File::create("kmerptms.txt").expect("file not present");
     for i in sequencevec.iter() {
         writeln!(filewrite, "{}\n", i).expect("file not present");
     }

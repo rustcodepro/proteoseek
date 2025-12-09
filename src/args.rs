@@ -3,7 +3,7 @@ use clap::{Parser, Subcommand};
 #[command(
     name = "proteoseek",
     version = "1.0",
-    about = "proteoseek for protein machine learning
+    about = "proteoseek for PTM protein machine learning classification based on the kmer abundance and the annotated peak
        ************************************************
        Gaurav Sablok
        codeprog@icloud.com
@@ -29,7 +29,7 @@ pub enum Commands {
         /// path to the fasta file
         fastafile: String,
         /// path to the previous kmer
-        kmerpath: Option<String>,
+        kmerpath: String,
         /// annotated peak data
         peakdata: String,
         /// threashold for the analysis
@@ -39,6 +39,6 @@ pub enum Commands {
         /// prediction peak
         predpeak: String,
         /// threads for the analysis
-        threads: String,
+        thread: String,
     },
 }
